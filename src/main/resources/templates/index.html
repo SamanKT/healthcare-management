@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+
+
+
+<!-- ************** DESIGNED and DEVELOPED by SAMAN KHATAEI *************** -->
+<!-- ************** All rights reserved *************** -->
+
+
+
+
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>HeathMe Dashboard</title>
+<!-- plugins:css -->
+<link rel="stylesheet"
+	href="vendors/mdi/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="vendors/base/vendor.bundle.base.css">
+<!-- endinject -->
+<!-- plugin css for this page -->
+<link rel="stylesheet"
+	href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+<!-- End plugin css for this page -->
+<!-- inject:css -->
+<link rel="stylesheet" href="css/style.css">
+<!-- endinject -->
+<link rel="shortcut icon" href="images/favicon.png" />
+<script type="text/javascript" th:src="@{/js/jsHome.js}"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+ window.addEventListener('DOMContentLoaded', (event) => {
+     document.getElementById("appDate").valueAsDate = new Date();
+     imageSelector();
+
+ });
+</script>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+    
+	 function compareDates(selection) {
+		 var rows = document.getElementsByTagName("table")[0].rows;
+		 
+		 for (let i = 1; i < rows.length; i++) {
+			 var td = rows[i].getElementsByTagName("td")[2];
+			 var split= td.innerHTML.split(" "); 
+			 if (selection==1) {
+		   if(split[0]!= document.getElementById("appDate").valueAsDate.toLocaleDateString()){
+			 
+			   rows[i].style.display = "none";
+		   }
+		   else {
+			   rows[i].style.display = "table-row";
+		   }
+			 }
+			 if (selection==2) {
+				 
+				 rows[i].style.display = "table-row";
+				 
+			 }
+			 
+		 }
+}
+/*]]>*/
+</script>
+</head>
+<body>
+	<div class="container-scroller">
+
+		<!-- partial:partials/_navbar.html -->
+		<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+			<div class="navbar-brand-wrapper d-flex justify-content-center">
+				<div
+					class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+					<a class="navbar-brand brand-logo" href="index.html"><img
+						src="images/HealthMeLogo.png" alt="logo" /></a> <a
+						class="navbar-brand brand-logo-mini" href="index.html"><img
+						src="images/logo-mini.svg" alt="logo" /></a>
+					<button class="navbar-toggler navbar-toggler align-self-center"
+						type="button" data-toggle="minimize">
+						<span class="mdi mdi-sort-variant"></span>
+					</button>
+				</div>
+			</div>
+			<div
+				class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
+				<ul class="navbar-nav navbar-nav-right">
+
+					<li class="nav-item nav-profile dropdown"><a
+						class="nav-link dropdown-toggle" href="#"
+						data-bs-toggle="dropdown" id="profileDropdown"> <!-- src="images/faces/face5.jpg" we added a js code to randomly assign profile pics -->
+							<img alt="profile" id="profile" /> <span
+							class="nav-profile-name" th:text="${user}">user name here</span>
+					</a>
+						<div class="dropdown-menu dropdown-menu-right navbar-dropdown"
+							aria-labelledby="profileDropdown">
+
+							<a class="dropdown-item" th:href="@{/logout?login}"> <i
+								class="mdi mdi-logout text-primary"></i> Logout
+							</a>
+					</div></li>
+				</ul>
+			</div>
+		</nav>
+		</div>
+		<!-- partial -->
+		<div class="container-fluid page-body-wrapper">
+			<!-- partial:partials/_sidebar.html -->
+			<nav class="sidebar sidebar-offcanvas" id="sidebar">
+				<ul class="nav">
+					<li class="nav-item"><a class="nav-link" href="/">
+							<i class="mdi mdi-home menu-icon"></i> <span class="menu-title">Dashboard</span>
+					</a></li>
+		
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/logout?register}"> <i
+							class="mdi mdi-account-plus menu-icon"></i> <span class="menu-title">Register</span>
+					</a></li>
+					
+				</ul>
+			</nav>
+			<!-- partial -->
+			<div class="main-panel">
+				<div class="content-wrapper">
+
+					<div class="row">
+						<div class="col-md-12 grid-margin">
+							<div class="d-flex justify-content-between flex-wrap">
+								<div class="d-flex align-items-end flex-wrap">
+									<div class="me-md-3 me-xl-5">
+										<h2>Welcome back,</h2>
+										<p class="mb-md-1">Your appointments are listed here.</p>
+										<p class="mb-md-0 text-muted" >This is a sample application developed by <a href="https://www.upwork.com/freelancers/~01d45dab5b311d5e84">Saman Khataei</a></p>
+										
+										<p class="mb-md-0 text-muted">includes the projects: Spring boot | Spring security | Spring data JPA | Spring MVC | Thymeleaf | Javascript </p>
+										<p class="mb-md-0 text-muted">Three Tier Architecture</p>
+										<p class="mb-md-0 text-muted" style="font-size: small;">all rights reserved.</p>
+									</div>
+
+								</div>
+								<div
+									class="d-flex justify-content-between align-items-end flex-wrap">
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row ">
+						<div class="col-md-12 grid-margin stretch-card w-75"  >
+							<div class="card "  >
+								<div class="card-body dashboard-tabs p-0  ">
+
+									<div class="tab-content py-0 px-0 " >
+											<div
+												class="d-flex d-xl-flex border-md-right flex-grow-1 align-items-center justify-content-left p-3 item">
+												<i class="mdi mdi-calendar-heart icon-lg me-3 text-primary"></i>
+												<div class="d-flex flex-column justify-content-around">
+													<small class="mb-1 text-muted">Report date</small> <input
+														type="date" class="datepicker mb-1 text-muted"
+														id="appDate" oninput="">
+												</div>
+												
+												<div
+												class="d-flex d-xl-flex  flex-grow-1 align-items-center justify-content-left p-3 item">
+									
+												<button class="btn btn-inverse-success mt-1 mt-xl-0" onclick="compareDates(1)">Filter</button>
+												&nbsp; <button class="btn btn-inverse-danger mt-1 mt-xl-0" onclick="compareDates(2)">Cancel Filter</button>		
+											</div>
+												<div
+													class="d-flex  flex-grow-1 align-items-center justify-content-center p-3 item" >
+
+													<div style=" margin-bottom: -60px; margin-top: -20px; padding-bottom: 40px; left: 250px;" id="id88f6ffc2eb647" a='{"t":"s","v":"1.2","lang":"en","locs":[1475],"ssot":"c","sics":"ds","cbkg":"rgba(255,255,255,0)","cfnt":"#000000","slfs":20,"slis":"45","slgp":"18"}'>Weather Data Source: <a href="https://sharpweather.com/weather_ankara/week/">https://sharpweather.com</a></div><script async src="https://static1.sharpweather.com/widgetjs/?id=id88f6ffc2eb647"></script>
+
+													<div class="d-flex flex-column justify-content-around">
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+			
+					<div class="row">
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card">
+								<button type="button" class="collapsible2">Create
+									Appointment</button>
+								<div class="content2">
+									<br>
+									<br>
+									<h4 class="card-title">Appointment Form</h4>
+
+									<form class="form-inline" th:action="@{/addAppointment}" th:object="${patient}">
+										<label class="sr-only" for="inlineFormInputName2">Name</label>
+										<input th:field="*{name}" type="text" class="form-control mb-2 mr-sm-2"
+											id="inlineFormInputName2" placeholder="name"
+											required="required">  <label class="sr-only"
+											for="inlineFormInputGroupUsername4">Date</label>
+										<div class="input-group mb-2 mr-sm-2">
+
+											<input th:field="*{appointment}" type="datetime-local" class="form-control"
+												id="inlineFormInputGroupUsername4" placeholder="pick a date"
+												required="required">
+										</div>
+
+										<input type="submit" class="btn btn-primary mb-2">
+									</form>
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body">
+									<h4 class="card-title">Appointments</h4>
+
+									<div class="table-responsive">
+										<table class="table table-striped ">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Name</th>
+													<th>Time</th>
+													<th>Note</th>
+													<th>Update</th>
+													<th>Delete</th>
+													
+												</tr>
+											</thead>
+									<tbody >
+											
+												<tr th:each="patient : ${patients}">
+												
+													<td th:text = "${patientStat.count}" class="py-1" ></td>
+													<td th:text = "${patient.name}" class="py-1" ></td>
+													<td th:text = "${patient.appointment}" class="py-1"></td>
+													<td th:text = "${patient.note}" class="py-1"></td>
+													<td><a  class="btn btn-primary mb-2 py-1" th:href="@{/update/{id}(id=${patient.id})}">Update</a></td>
+													<td><a  class="btn btn-danger mb-2 py-1" th:href="@{/delete/{id}(id=${patient.id})}">Delete</a></td>
+													</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-12 stretch-card">
+							<div class="card">
+								<div class="card-body">
+									<p class="card-title">Recent Prescriptions</p>
+									<div class="table-responsive">
+										<table id="recent-purchases-listing" class="table">
+											<thead>
+												<tr>
+													<th>Patient Name</th>
+													<th>Prescription-1</th>
+													<th>Prescription-2</th>
+													<th>Prescription-3</th>
+													<th>Prescription-4</th>
+													<th>Add Prescription</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="patient: ${patients}">
+													<td th:text="${patient.name}" style="font-weight: bold;"></td>
+													
+													<td th:text="${patient.presciptions.size()} > 0? ${patient.presciptions[0]}  " ></td>
+													<td th:text="${patient.presciptions.size()} > 1? ${patient.presciptions[1]}  "></td>
+													<td th:text="${patient.presciptions.size()} > 2? ${patient.presciptions[2]} "></td>
+													<td th:text="${patient.presciptions.size()} > 3? ${patient.presciptions[3]}  "></td>
+													<td><a  class="btn btn-outline-dark mb-2 py-1" th:href="@{/addPres/{id}(id=${patient.id})}">Add Prescription</a></td>
+												</tr>
+												
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- content-wrapper ends -->
+					<!-- rss feed for health news -->
+						<div class="row">
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body">
+									<h4 class="card-title">Health News Live Feed</h4>
+					
+<rssapp-imageboard id="tZViQeUAMHjg2Kw8"></rssapp-imageboard><script src="https://widget.rss.app/v1/imageboard.js" type="text/javascript" async></script>
+				</div>
+				</div>
+				</div>
+				</div>
+				<!-- partial:partials/_footer.html -->
+				<footer class="footer">
+					<div>
+		  <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">The Application is developed by<a href="https://www.upwork.com/freelancers/~01d45dab5b311d5e84" target="_blank"> Saman Khataei </a>2022 - all rights reserved. </span>
+        
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">The base template is taken from: Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com </a>2021</span>
+					</div>
+				</footer>
+	
+	<!-- plugins:js -->
+	<script src="vendors/base/vendor.bundle.base.js"></script>
+	<!-- endinject -->
+	<!-- Plugin js for this page-->
+	<script src="vendors/chart.js/Chart.min.js"></script>
+	<script src="vendors/datatables.net/jquery.dataTables.js"></script>
+	<script src="vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+	<!-- End plugin js for this page-->
+	<!-- inject:js -->
+	<script src="js/off-canvas.js"></script>
+	<script src="js/hoverable-collapse.js"></script>
+	<script src="js/template.js"></script>
+	<!-- endinject -->
+	<!-- Custom js for this page-->
+	<script src="js/dashboard.js"></script>
+	<script src="js/data-table.js"></script>
+	<script src="js/jquery.dataTables.js"></script>
+	<script src="js/dataTables.bootstrap4.js"></script>
+	<!-- End custom js for this page-->
+
+	<script src="js/jquery.cookie.js" type="text/javascript"></script>
+</body>
+
+</html>
+
